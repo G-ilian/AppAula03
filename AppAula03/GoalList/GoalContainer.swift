@@ -8,14 +8,25 @@
 import SwiftUI
 
 struct GoalContainer: View {
+    var goals: [GoalType]
+    var isLoading: Bool
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20){
-            ForEach(goalMock){
-                goal in GoalListView(goal: goal)
+            if isLoading {
+                ProgressView("Carregando metas...")
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(1.2)
+                    .padding()
+            } else {
+                ForEach(goals) { goal in
+                    GoalListView(goal: goal)
+                }
             }
         }
     }
 }
+
 #Preview {
-    GoalContainer()
+    GoalContainer(goals: goalMock,isLoading: true)
 }
